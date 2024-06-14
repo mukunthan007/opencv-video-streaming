@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+ <h1>Dashboard</h1>
+ <p>Welcome to your dashboard.</p>
+
+ <h2>Upload File</h2>
+    <form enctype="multipart/form-data" method="POST" action="{% url 'video_middleware:upload_file' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Upload"/>
+    </form>
+ <p>Stored Files</p>
+ <table class="table">
+     <thead>
+       <tr>
+         <th scope="col">File Name</th>
+       </tr>
+     </thead>
+     <tbody>
+         {% for file in files %}
+         <td> <a href="{% url 'video_middleware:view_video' video_id=file.id %}"> {{file.file_name}}  </td>
+     </tbody>
+ </table>
+   {% endfor %}
+{% endblock %}
